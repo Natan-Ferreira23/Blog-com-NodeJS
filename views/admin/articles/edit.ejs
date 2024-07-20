@@ -1,0 +1,63 @@
+<%- include ("../../partials/header.ejs")%>
+    <%- include ("../../partials/navbar.ejs")%>
+
+        <body>
+            <div class="container">
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h2 class="text-center p-3">Edição do artigo</h2>
+                    </div>
+                    <form action="/articles/updat" method="post" class="p-3">
+                        <input type="hidden" name="id" value="<%=article.id%>">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="title" value="<%=article.title%>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="categories" class="form-label">Categorias</label>
+                            <select name="category" id="category" class="form-select">
+                                <%categories.forEach(category=>{%>
+                                    <% if(category.id==article.categoryId){%>
+                                        <option value="<%=category.id%>" selected>
+                                            <%=category.title%>
+                                        </option>
+                                        <%}else{%>
+                                            <option value="<%=category.id%>">
+                                                <%=category.title%>
+                                            </option>
+                                            <%}%>
+                                                <%})%>
+
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <textarea name="body" id="article" class="form-control"
+                                placeholder="Escreva o artigo aqui.."></textarea>
+                        </div>
+
+                        <div class="mb-3 d-flex justify-content-center">
+                            <input type="submit" value="Cadastrar" Class="btn btn-success">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="content" style="display:none;">
+                <%- article.body %>
+            </div>
+        </body>
+
+        <script src="/tinymce/tinymce.min.js">  </script>
+
+        <!--Para usarmos visual de editor no nosso text area-->
+        <script>
+            tinymce.init({
+                language: 'pt_BR',
+                selector: '#article',  // change this value according to your HTML
+                activeEditor: true,
+                plugins: [ //adicionando funcionalidades a mais no tinymce
+                    'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons'
+                ], init_instance_callback: () => { // o conteudo da text area é o conteudo da div que tem o id content
+                    tinymce.get('article').setContent($('#content').html())
+                }
+            });
+        </script>
+        <%- include ("../../partials/footer.ejs")%>

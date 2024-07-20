@@ -1,0 +1,48 @@
+<%- include ("../../partials/header.ejs")%>
+    <%- include ("../../partials/navbar.ejs")%>
+
+        <body>
+            <div class="container">
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h2 class="text-center p-3">Novo artigo</h2>
+                    </div>
+                    <form action="/article/save" method="post" class="p-3">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="title"
+                                placeholder="Digite o titulo do artigo">
+                        </div>
+                        <div class="mb-3">
+                            <label for="categories" class="form-label">Categorias</label>
+                            <select name="category" id="category" class="form-select">
+                                <%categories.forEach(category=>{%>
+                                    <option value="<%=category.id%>">
+                                        <%=category.title%>
+                                    </option>
+                                    <%})%>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <textarea name="body" id="article" class="form-control"
+                                placeholder="Escreva o artigo aqui.."></textarea>
+                        </div>
+
+                        <div class="mb-3 d-flex justify-content-center">
+                            <input type="submit" value="Cadastrar" Class="btn btn-success">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </body>
+        <%- include ("../../partials/footer.ejs")%>
+            <script src="/tinymce/tinymce.min.js">  </script>
+            <!--Para usarmos visual de editor no nosso text area-->
+            <script>
+                tinymce.init({
+                    language: 'pt_BR',
+                    selector: '#article',  // change this value according to your HTML
+                    plugins: [ //adicionando funcionalidades a mais no tinymce
+                        'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons'
+                    ]
+                });
+            </script>

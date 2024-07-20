@@ -1,0 +1,44 @@
+<%- include ("../../partials/header.ejs")%>
+    <%- include ("../../partials/navbar.ejs")%>
+
+        <body>
+            <div class="container">
+                <h1>Usuários</h1>
+                <div class="mb-3">
+                    <a href="/admin/users/create" class="btn btn-success btn">Criar um novo usuário</a>
+                </div>
+                <table class="table table-bordered table-dark">
+                    <thead>
+                        <tr> <!--Linha-->
+                            <th>Id</th> <!--Coluna-->
+                            <th>Email</th> <!--Coluna-->
+                            <th>Ações</th> <!--Coluna-->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach(user=>{%>
+                            <tr>
+                                <td>
+                                    <%=user.id%>
+                                </td>
+                                <td>
+                                    <%=user.email%>
+                                </td>
+                                <td>
+                                    <a href="/admin/categories/edit/" class="btn btn-warning">Editar</a>
+
+
+                                    <form action="/categories/delete" onsubmit="confirmarDeleção(event,this)"
+                                        method="post" class="d-inline">
+                                        <input type="hidden" name="id" value="">
+                                        <button class="btn btn-danger">Deletar</button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                            <%})%>
+                    </tbody>
+                </table>
+            </div>
+        </body>
+        <%- include ("../../partials/footer.ejs")%>
